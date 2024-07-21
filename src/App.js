@@ -1,16 +1,20 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import FingerSelector from './pages/FingerSelector';
+import AbsSelector from './pages/AbsSelector';
 import Home from './pages/home';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate replace to ="/home"/>}/>
-        <Route path="/home" element={<Home/>}/>
-      </Routes>
-    </BrowserRouter>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/home" />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/finger" element={<FingerSelector />} />
+          <Route path="/abs" element={<AbsSelector />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
