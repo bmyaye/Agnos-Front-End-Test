@@ -10,6 +10,14 @@ import selectedAbs6Image from '../assets/suprapubic-highlight.png';
 import selectedAbs7Image from '../assets/umbilicus-highlight.png';
 import selectedAbs8Image from '../assets/all-over-highlight.png';
 
+import captionAbs1Image from '../assets/epigastrium-active.png';
+import captionAbs2Image from '../assets/llq-active.png';
+import captionAbs3Image from '../assets/luq-active.png';
+import captionAbs4Image from '../assets/rlq-active.png';
+import captionAbs5Image from '../assets/ruq-active.png';
+import captionAbs6Image from '../assets/suprapubic-active.png';
+import captionAbs7Image from '../assets/umbilicus-active.png';
+
 import React, { useState, useRef } from 'react';
 import './AbsSelector.css';
 
@@ -20,7 +28,7 @@ const AbsPainSelector = () => {
         navigate('/home');
     };
 
-    const [activeImage, setActiveImage] = useState(null);
+    const [activeImages, setActiveImages] = useState([]);
     const absImageRef = useRef(null);
 
     const positions = [
@@ -34,26 +42,26 @@ const AbsPainSelector = () => {
         { id: 8, set: 8, top: 525, left: 157, width: 165, height: 50 },
     ];
 
-    const getImageForSet = (set) => {
+    const getImagesForSet = (set) => {
         switch (set) {
             case 1:
-                return selectedAbs1Image;
+                return [selectedAbs1Image, captionAbs1Image];
             case 2:
-                return selectedAbs3Image;
+                return [selectedAbs3Image, captionAbs3Image];
             case 3:
-                return selectedAbs2Image;
+                return [selectedAbs2Image, captionAbs2Image];
             case 4:
-                return selectedAbs6Image;
+                return [selectedAbs6Image, captionAbs6Image];
             case 5:
-                return selectedAbs4Image;
+                return [selectedAbs4Image, captionAbs4Image];
             case 6:
-                return selectedAbs5Image;
+                return [selectedAbs5Image, captionAbs5Image];
             case 7:
-                return selectedAbs7Image;
+                return [selectedAbs7Image, captionAbs7Image];
             case 8:
-                return selectedAbs8Image;
+                return [selectedAbs8Image];
             default:
-                return null;
+                return [];
         }
     };
 
@@ -70,10 +78,8 @@ const AbsPainSelector = () => {
         );
 
         if (clickedPosition) {
-            const image = getImageForSet(clickedPosition.set);
-            if (image !== activeImage) {
-                setActiveImage(image);
-            }
+            const images = getImagesForSet(clickedPosition.set);
+            setActiveImages(images);
         }
     };
 
@@ -103,11 +109,12 @@ const AbsPainSelector = () => {
                                 alt="Default Abs"
                                 style={{ width: '100%', position: 'relative' }}
                             />
-                            {activeImage && (
+                            {activeImages.map((image, index) => (
                                 <div
+                                    key={index}
                                     className="selected-image-overlay"
                                     style={{
-                                        backgroundImage: `url(${activeImage})`,
+                                        backgroundImage: `url(${image})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'center',
                                         width: '100%',
@@ -119,7 +126,7 @@ const AbsPainSelector = () => {
                                         pointerEvents: 'none'
                                     }}
                                 />
-                            )}
+                            ))}
                         </div>
                     </Card>
                     <div style={{

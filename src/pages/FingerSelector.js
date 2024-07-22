@@ -6,6 +6,10 @@ import selectedFinger2Image from '../assets/pip-highlight.png';
 import selectedFinger3Image from '../assets/mcp-highlight.png';
 import selectedFinger4Image from '../assets/others-highlight.png';
 
+import captionFinger1Image from '../assets/dip-active.png';
+import captionFinger2Image from '../assets/pip-active.png';
+import captionFinger3Image from '../assets/mcp-active.png';
+
 import React, { useState, useRef } from 'react';
 import './FingerSelector.css';
 
@@ -16,7 +20,7 @@ const FingerSelector = () => {
         navigate('/home');
     };
 
-    const [activeImage, setActiveImage] = useState(null);
+    const [activeImages, setActiveImages] = useState([]);
     const fingerImageRef = useRef(null);
 
     const positions = [
@@ -37,18 +41,18 @@ const FingerSelector = () => {
         { id: 15, set: 4, top: 540, left: 68, width: 352, height: 50 },
     ];
 
-    const getImageForSet = (set) => {
+    const getImagesForSet = (set) => {
         switch (set) {
             case 1:
-                return selectedFinger1Image;
+                return [selectedFinger1Image, captionFinger1Image];
             case 2:
-                return selectedFinger2Image;
+                return [selectedFinger2Image, captionFinger2Image];
             case 3:
-                return selectedFinger3Image;
+                return [selectedFinger3Image, captionFinger3Image];
             case 4:
-                return selectedFinger4Image;
+                return [selectedFinger4Image];
             default:
-                return null;
+                return [];
         }
     };
 
@@ -65,10 +69,8 @@ const FingerSelector = () => {
         );
 
         if (clickedPosition) {
-            const image = getImageForSet(clickedPosition.set);
-            if (image !== activeImage) {
-                setActiveImage(image);
-            }
+            const images = getImagesForSet(clickedPosition.set);
+            setActiveImages(images);
         }
     };
 
@@ -98,11 +100,12 @@ const FingerSelector = () => {
                                 alt="Default Finger"
                                 style={{ width: '100%', position: 'relative' }}
                             />
-                            {activeImage && (
+                            {activeImages.map((image, index) => (
                                 <div
+                                    key={index}
                                     className="selected-image-overlay"
                                     style={{
-                                        backgroundImage: `url(${activeImage})`,
+                                        backgroundImage: `url(${image})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'center',
                                         width: '100%',
@@ -114,7 +117,7 @@ const FingerSelector = () => {
                                         pointerEvents: 'none'
                                     }}
                                 />
-                            )}
+                            ))}
                         </div>
                     </Card>
                     <div style={{

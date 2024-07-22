@@ -58,7 +58,7 @@ function Home() {
                     borderRadius: 15,
                     cursor: 'pointer',
                 }}>
-                    มีอาหารปวดหน้าท้อง
+                    มีอาการปวดหน้าท้อง
                 </button>
             </div>
         </div>
